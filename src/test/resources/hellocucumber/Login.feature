@@ -2,17 +2,22 @@ Feature: Login
   BoraTech Community Application Login
 
   Scenario: Log in with valid credentials
-    Given I'm on BoraTech Community homepage 
+    Given I'm on BoraTech Community homepage
     When I click on LogIn button
-    And I enter valid username and valid password
+    And I enter username "murad@test.com" and password "murad001"
     And submit
     Then I should be logged in
     And See the Dashboard page
-    
-  Scenario: Log in with valid credentials
-    Given I'm on BoraTech Community homepage 
+
+  Scenario Outline: Log in with invalid credentials
+    Given I'm on BoraTech Community homepage
     When I click on LogIn button
-    And I enter valid username and valid password
+    And I enter username "<email>" and password "<password>"
     And submit
-    Then I should be logged in
-    And See the Dashboard page
+    Then I should not be logged in
+    And I will not see the Dashboard page
+
+    Examples: 
+      | email                      | password             |
+      | murad@test.com             | thisIsAWrongPassword |
+      | muradFakeUserName@test.com | murad001             |
