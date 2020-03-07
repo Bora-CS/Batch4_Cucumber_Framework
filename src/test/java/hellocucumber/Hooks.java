@@ -21,6 +21,7 @@ public class Hooks {
 		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 	}
 
+	
 	@After
 	public void cleanupSelenium() {
 		System.out.println("==> Quit Selenium");
