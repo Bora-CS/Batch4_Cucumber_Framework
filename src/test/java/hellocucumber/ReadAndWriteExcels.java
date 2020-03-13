@@ -23,24 +23,32 @@ public class ReadAndWriteExcels {
 			System.out.println("File Opened Successfully!");
 
 			XSSFSheet sheet = workbook.getSheet("CheatSheet");
-			int totalRowNum = sheet.getLastRowNum();
-			System.out.println("Number of rows available: " + (totalRowNum + 1));
+			int lastRowNum = sheet.getLastRowNum();
+			System.out.println("Last Row Num: " + lastRowNum);
+			System.out.println("Number of rows available: " + (lastRowNum + 1));
 			
-			// add a new row
-			// add some more data
-			// save the workbook back to the same file
+			XSSFRow newRow = sheet.createRow(lastRowNum + 1);
+			newRow.createCell(0).setCellValue(1011);
+			newRow.createCell(1).setCellValue("Murad");
+			newRow.createCell(2).setCellValue("Erkin");
+			newRow.createCell(3).setCellValue("murad.erkin@test.com");
+			newRow.createCell(4).setCellValue("202-202-2000");
+
+			FileOutputStream fos = new FileOutputStream(file);
+			workbook.write(fos);
 			
 			fis.close();
+			fos.close();
+			workbook.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
 	}
 
 	public static String generateTestDataToExcel() {
 		Faker faker = new Faker();
-		Date date = new Date();
-		String timeStamp = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(date);
+		String timeStamp = Keywords.getCurrentTimeStamp();
 		String fileName = "TestData" + timeStamp + ".xlsx";
 
 		try {

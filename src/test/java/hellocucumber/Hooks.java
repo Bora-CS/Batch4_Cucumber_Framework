@@ -53,6 +53,7 @@ public class Hooks {
 		case UI_TEST:
 			driver.close();
 			driver.quit();
+			driver = null;
 			break;
 		case API_TEST:
 			System.out.println("Cleaning up after API tests!");
