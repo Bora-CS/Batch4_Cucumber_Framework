@@ -1,6 +1,7 @@
 Feature: Login
   BoraTech Community Application Login
 
+	@Smoke @UI
   Scenario: [UI] Log in with valid credentials
     Given I'm on BoraTech Community homepage
     When I click on LogIn button
@@ -9,6 +10,7 @@ Feature: Login
     Then I should be logged in
     And See the Dashboard page
 
+	@Regression @UI
   Scenario Outline: [UI] Log in with invalid credentials
     Given I'm on BoraTech Community homepage
     When I click on LogIn button

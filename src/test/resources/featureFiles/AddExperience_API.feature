@@ -1,6 +1,7 @@
 Feature: Add Experience API
 
-  Scenario Outline: Add Experience
+	@Smoke @API
+  Scenario Outline: [API] Add Experience
     Given User is logged in with username: "<username>" & password: "<password>" and have a valid token
     When User send a request to add experience with data: "<title>", "<company>", "<location>", "<from>", "<to>", "<current>", "<description>"
     Then User should receive a response status code: "<status code>"

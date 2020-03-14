@@ -3,16 +3,19 @@ package ui_StepDefinitions;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import utilities.DriverFactory;
 
-import static cucumberHooks.Hooks.driver;
 import static org.junit.Assert.*;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 public class BoraCommunityStepDefinitions {
-	
+
+	public static final WebDriver driver = DriverFactory.getInstance();
+
 	@Given("I'm on BoraTech Community homepage")
 	public void i_m_on_BoraTech_Community_homepage() {
 		driver.get("https://lit-mesa-27064.herokuapp.com/");
@@ -59,7 +62,7 @@ public class BoraCommunityStepDefinitions {
 		}
 		assertTrue("Dashboard is not shown.", driver.getCurrentUrl().endsWith("dashboard"));
 	}
-	
+
 	@Then("I should not be logged in")
 	public void i_should_not_be_logged_in() {
 		String error = "User is somehow logged in.";
@@ -82,6 +85,5 @@ public class BoraCommunityStepDefinitions {
 		}
 		assertTrue(error, driver.getCurrentUrl().endsWith("login"));
 	}
-
 
 }
