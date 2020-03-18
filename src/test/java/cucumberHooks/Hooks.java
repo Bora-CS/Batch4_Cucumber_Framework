@@ -1,5 +1,7 @@
 package cucumberHooks;
 
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 
 import io.cucumber.java.After;
@@ -43,9 +45,14 @@ public class Hooks {
 	}
 
 	@After
-	public void cleanupTest() throws Exception {
+	public void cleanupTest(Scenario scenario) throws Exception {
 		switch (testType) {
 		case UI_TEST:
+			if (scenario.isFailed()) {
+				TakesScreenshot tss = (TakesScreenshot) driver;
+				byte[] screenshot = tss.getScreenshotAs(OutputType.BYTES);
+				scenario.embed(screenshot, "image/png", "ScreenShotOnFailure");
+			}
 			DriverFactory.cleanUp();
 			break;
 		case API_TEST:

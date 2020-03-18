@@ -1,3 +1,4 @@
+@Login
 Feature: Login
   BoraTech Community Application Login
 

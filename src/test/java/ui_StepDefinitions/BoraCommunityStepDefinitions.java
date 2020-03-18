@@ -4,6 +4,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import utilities.DriverFactory;
+import utilities.Keywords;
 
 import static org.junit.Assert.*;
 
@@ -14,7 +15,7 @@ import org.openqa.selenium.WebElement;
 
 public class BoraCommunityStepDefinitions {
 
-	public static final WebDriver driver = DriverFactory.getInstance();
+	private WebDriver driver = DriverFactory.getInstance();
 
 	@Given("I'm on BoraTech Community homepage")
 	public void i_m_on_BoraTech_Community_homepage() {
@@ -40,6 +41,7 @@ public class BoraCommunityStepDefinitions {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		Keywords.takeScreenShot(driver);
 	}
 
 	@Then("I should be logged in")
