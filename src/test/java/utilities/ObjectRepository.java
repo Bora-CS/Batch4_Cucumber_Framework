@@ -49,10 +49,9 @@ public class ObjectRepository {
 		default:
 			throw new Exception("Unknown locator type <" + locatorType + ">");
 		}
-
 	}
-	
-	public String getLocatorValue (String key) {
+
+	public String getLocatorValue(String key) {
 		String locator = prop.getProperty(key);
 		String locatorValue = locator.split(":")[1];
 		return locatorValue;

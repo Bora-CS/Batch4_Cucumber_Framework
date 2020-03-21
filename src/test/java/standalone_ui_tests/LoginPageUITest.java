@@ -1,4 +1,4 @@
-package sample_ui_tests;
+package standalone_ui_tests;
 
 import utilities.Keywords;
 

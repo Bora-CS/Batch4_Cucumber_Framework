@@ -3,6 +3,9 @@ package ui_StepDefinitions;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import pageFactories.BoraHomePage;
+import pageFactories.BoraLoginPage;
+import ui_Implementations.BoraCommunityUiImplementations;
 import utilities.DriverFactory;
 import utilities.Keywords;
 
@@ -16,6 +19,19 @@ import org.openqa.selenium.WebElement;
 public class BoraCommunityStepDefinitions {
 
 	private WebDriver driver = DriverFactory.getInstance();
+	private BoraHomePage homePage = new BoraHomePage(driver);
+	private BoraLoginPage loginPage = new BoraLoginPage(driver);
+	
+	@When("User logs into BoraCommunity with username: {string} & password: {string}")
+	public void user_logs_into_BoraCommunity_with_username_password(String username, String password) {
+		homePage.goToLogin();
+		loginPage.login(username, password);
+	}
+
+	@Then("User should see the expeirence with detail: {string}, {string}, {string}, {string} listed under Experience Credentials")
+	public void user_should_see_the_expeirence_with_detail_listed_under_Experience_Credentials(String title, String company, String from, String to) {
+		BoraCommunityUiImplementations.validateExperienceExistOnDashboard(title, company, from, to);
+	}
 
 	@Given("I'm on BoraTech Community homepage")
 	public void i_m_on_BoraTech_Community_homepage() {
@@ -24,24 +40,24 @@ public class BoraCommunityStepDefinitions {
 
 	@When("I click on LogIn button")
 	public void i_click_on_LogIn_button() {
-		driver.findElement(By.xpath("//a[text()='Login']")).click();
+		loginPage.clickLogin();
 	}
 
 	@When("I enter username {string} and password {string}")
 	public void i_enter_username_and_password(String username, String password) {
-		driver.findElement(By.name("email")).sendKeys(username);
-		driver.findElement(By.name("password")).sendKeys(password);
+		loginPage.setEmail(username);
+		loginPage.setPassword(password);
 	}
 
 	@When("submit")
 	public void submit() {
-		driver.findElement(By.xpath("//input[@type='submit']")).click();
+		loginPage.clickLogin();
 		try {
 			Thread.sleep(1000);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		Keywords.takeScreenShot(driver);
+		Keywords.takeScreenShot(driver, null);
 	}
 
 	@Then("I should be logged in")

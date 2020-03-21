@@ -36,10 +36,11 @@ public class Keywords {
 		return timeStamp;
 	}
 
-	public static void takeScreenShot(WebDriver driver) {
+	public static void takeScreenShot(WebDriver driver, String fileName) {
 		TakesScreenshot screenShotTaker = (TakesScreenshot) driver;
 		File screenShotFile = screenShotTaker.getScreenshotAs(OutputType.FILE);
-		File targetScreenShotResultFile = new File("target/ScreenShots/SS" + getCurrentTimeStamp() + ".jpeg");
+		File targetScreenShotResultFile = new File("target/ScreenShots/SS" + getCurrentTimeStamp()
+				+ ((fileName != null && !fileName.isEmpty()) ? "_" + fileName : "") + ".jpeg");
 		try {
 			FileUtils.copyFile(screenShotFile, targetScreenShotResultFile);
 		} catch (Exception e) {
@@ -63,15 +64,15 @@ public class Keywords {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void startUItest() {
 		driver = DriverFactory.getInstance();
 	}
-	
+
 	public static void endUITest() {
 		DriverFactory.cleanUp();
 	}
-	
+
 	public static void navigate(String url) {
 		driver.get(url);
 	}
@@ -85,7 +86,7 @@ public class Keywords {
 		highlightElement(driver, getElement(driver, locator));
 		element.click();
 	}
-	
+
 	public static void click(String locator) throws Exception {
 		WebElement element = getElement(driver, locator);
 		highlightElement(driver, getElement(driver, locator));
@@ -97,7 +98,7 @@ public class Keywords {
 		highlightElement(driver, element);
 		element.sendKeys(input);
 	}
-	
+
 	public static void enter(String locator, String input) throws Exception {
 		WebElement element = getElement(driver, locator);
 		highlightElement(driver, element);
@@ -110,37 +111,37 @@ public class Keywords {
 		Select select = new Select(element);
 		select.selectByValue(value);
 	}
-	
+
 	public static void selectFromDropdownByValue(String locator, String value) throws Exception {
 		WebElement element = getElement(driver, locator);
 		highlightElement(driver, element);
 		Select select = new Select(element);
 		select.selectByValue(value);
 	}
-	
+
 	public static void selectFromDropdownByVisibleText(WebDriver driver, String locator, String text) throws Exception {
 		WebElement element = getElement(driver, locator);
 		highlightElement(driver, element);
 		Select select = new Select(element);
 		select.selectByVisibleText(text);
 	}
-	
+
 	public static void selectFromDropdownByVisibleText(String locator, String text) throws Exception {
 		WebElement element = getElement(driver, locator);
 		highlightElement(driver, element);
 		Select select = new Select(element);
 		select.selectByVisibleText(text);
 	}
-	
+
 	public static List<WebElement> getElements(String locator) throws Exception {
 		return driver.findElements(objRepo.getLocator(locator));
 	}
-	
-	public static String getLocatorValue (String locator) {
+
+	public static String getLocatorValue(String locator) {
 		return objRepo.getLocatorValue(locator);
 	}
-	
-	public static By getLocator (String locator) throws Exception {
+
+	public static By getLocator(String locator) throws Exception {
 		return objRepo.getLocator(locator);
 	}
 
@@ -149,7 +150,7 @@ public class Keywords {
 		highlightElement(driver, element);
 		element.clear();
 	}
-	
+
 	public static WebDriver getDriver() {
 		return driver;
 	}

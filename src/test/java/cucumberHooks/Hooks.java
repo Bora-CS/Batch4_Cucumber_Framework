@@ -15,6 +15,7 @@ public class Hooks {
 	public static String testType;
 	private static final String UI_TEST = "UI_TEST";
 	private static final String API_TEST = "API_TEST";
+	private static final String END_TO_END_TEST = "END_TO_END_TEST";
 	private static final String UNDEFINED = "UNDEFINED";
 
 	@Before
@@ -22,20 +23,24 @@ public class Hooks {
 		determineTestType(scenario);
 		switch (testType) {
 		case UI_TEST:
+		case END_TO_END_TEST:
 			driver = DriverFactory.getInstance();
 			break;
 		case API_TEST:
-			System.out.println("Do some setup that's needed for API tests!");
 			break;
 		case UNDEFINED:
-			String errorMessage = "Please specific a test type in scenario name.\nFor example: \"Scenario: [UI] your scenario name here...\"";
+			String errorMessage = "Please specific a test type in scenario name."
+					+ "\nOptions: [UI], [API], [UI & API]"
+					+ "\nFor example: \"Scenario: [UI] your scenario name here...\"";
 			throw new Exception(errorMessage);
 		}
 	}
 
 	private void determineTestType(Scenario scenario) {
 		String scenarioName = scenario.getName();
-		if (scenarioName.contains("[UI]")) {
+		if (scenarioName.contains("[UI & API]")) {
+			testType = END_TO_END_TEST;
+		} else if (scenarioName.contains("[UI]")) {
 			testType = UI_TEST;
 		} else if (scenarioName.contains("[API]")) {
 			testType = API_TEST;
@@ -48,6 +53,7 @@ public class Hooks {
 	public void cleanupTest(Scenario scenario) throws Exception {
 		switch (testType) {
 		case UI_TEST:
+		case END_TO_END_TEST:
 			if (scenario.isFailed()) {
 				TakesScreenshot tss = (TakesScreenshot) driver;
 				byte[] screenshot = tss.getScreenshotAs(OutputType.BYTES);
@@ -56,7 +62,6 @@ public class Hooks {
 			DriverFactory.cleanUp();
 			break;
 		case API_TEST:
-			System.out.println("Cleaning up after API tests!");
 			break;
 		}
 	}

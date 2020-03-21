@@ -50,5 +50,16 @@ public class AddExperienceStepDefinitions {
 		int actualStatusCode = response.getStatusCode();
 		assertEquals(expectedStatusCode, actualStatusCode);
 	}
+	
+	@Given("User sends a request to log in with username: {string} & password: {string} and have a valid token")
+	public void user_sends_a_request_to_log_in_with_username_password_and_have_a_valid_token(String username, String password) {
+		token = BoraAPIServices.login(username, password);
+		assertTrue(!token.isEmpty());
+	}
+
+	@Given("User receives a valid response status code: {string}")
+	public void user_receives_a_valid_response_code(String expectedStatusCode) {
+		assertEquals(expectedStatusCode, response.getStatusCode() + "");
+	}
 
 }
